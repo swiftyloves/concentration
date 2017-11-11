@@ -15,12 +15,11 @@
   <body>
 
     <button id="solvent">Add Solvent</button>
-    <button id="start">Start</button>
     <div id="container"></div>
-
-    <div id="checks">
-        X-axis:<input type="checkbox" id="xChecked" checked/>
-        Y-axis:<input type="checkbox" id="yChecked" checked/>
+    <div class="concentration">
+        <span>Concentraction = </span>
+        <span id="solvent"></span> / <span id="solution"></span>
+        
     </div>
 
     
@@ -31,7 +30,6 @@
     <script>
         dragbartop 
         .attr("cursor", "ns-resize");
-
     </script>
   </body>
 </html>

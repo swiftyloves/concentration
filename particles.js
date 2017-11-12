@@ -4,7 +4,7 @@
 
 // Basic control variables
 var gridSize = 600; // The square size in pixels of the 2-d world
-var numParticles = 50;
+var numParticles = 10;
 var epochTarget = 10;
 var epochActual = 0;
 var counter = 0;
@@ -28,7 +28,7 @@ var getYSpeed = function() {
 /*
  */
 
-var createParticle = function() {
+var createParticle = function(x, y, status) {
     pType = "reactantA";
     pRadius = 8;
     rx = Math.floor((Math.random() * 10) + 1);
@@ -38,13 +38,14 @@ var createParticle = function() {
     }
     //console.log(i, pType);
     particles.push({
-    x: Math.floor(OFFSET_X + Math.random() * width),
-    y: Math.floor(OFFSET_Y + Math.random() * height),
-    r: pRadius,
-    key: counter++,
-    type: pType,
-    vx: getXSpeed(),
-    vy: getYSpeed()
+        x: x ? x : Math.floor(OFFSET_X + Math.random() * width),
+        y: y ? y : Math.floor(OFFSET_Y + Math.random() * height),
+        r: pRadius,
+        status: status,
+        key: counter++,
+        type: pType,
+        vx: getXSpeed(),
+        vy: getYSpeed()
     });
 };
 var particles = [];
@@ -105,6 +106,24 @@ var update = function(elapsed) {
 
 
     var particle = particles[j];
+
+    if (particle.status == 'fall' ) {
+        if (particle.y < OFFSET_Y) {
+            particle.vy = particle.vy + 1.2;
+            console.log('123345')
+            particle.y = particle.y + (elapsed / 1000) * particle.vy;
+
+            continue;
+        } else {
+            particle.status = 'collected';
+        }
+    }
+    if (particle.status == 'collected' && particle.y < Y_LIMIT) {
+        particle.vy = particle.vy - 0.8;
+    } else {
+        particle.status = '';
+    }
+
     //  resize volume
     if (particle.y < OFFSET_Y) {
         particle.y = OFFSET_Y

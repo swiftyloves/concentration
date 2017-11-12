@@ -43,17 +43,25 @@ var svg = d3.select("body").append("svg")
 
 var newg = svg.append("g")
       .selectAll("rect")
-      .data([{x: OFFSET_X, y: OFFSET_Y}])
+      .data([{x: OFFSET_X, y: OFFSET_Y, height: height}])
       .enter();
 
 
-var solventContainer = newg.append("rect");
+var solventContainer = newg.append("rect")
+      .attr("id", "solvent")
+      .attr("x", w / 2 )
+      .attr("y", 10)
+      .attr("height", 200)
+      .attr("width", 50)
+      .attr("fill-opacity", .5)
+      .attr("fill", 'rgb(255,0,0)')
+      .attr("cursor", "pointer");
 
 document.getElementById("solvent").addEventListener('click', function(){
     solvent += 10;
     console.log('solvent:',solvent);
     dragrect.attr("fill", solutionColor(solvent, height * width));
-    createParticle();
+    createParticle(w/2, 210, "fall");
 });
 
 
@@ -61,11 +69,10 @@ var dragrect = newg.append("rect")
       .attr("id", "active")
       .attr("x", function(d) { return d.x; })
       .attr("y", function(d) { return d.y; })
-      .attr("height", height)
+      .attr("height", function(d) { return d.height; } )
       .attr("width", w / 3 * 2)
       .attr("fill-opacity", .5)
-      .attr("cursor", "move");
-      // .call(dragtop);
+      .call(dragtop);
       // .call(drag);
 var dragbartop = newg.append("rect")
       .attr("x", function(d) { return d.x + (dragbarw/2); })
@@ -77,17 +84,6 @@ var dragbartop = newg.append("rect")
       .attr("fill-opacity", .5)
       .attr("cursor", "ns-resize")
       .call(dragtop);
-/*
-var dragbarbottom = newg.append("rect")
-      .attr("x", function(d) { return d.x + (dragbarw/2); })
-      .attr("y", function(d) { return d.y + height - (dragbarw/2); })
-      .attr("id", "dragright")
-      .attr("height", dragbarw)
-      .attr("width", width - dragbarw)
-      .attr("fill", "lightgreen")
-      .attr("fill-opacity", .5)
-      .attr("cursor", "ns-resize")
-      .call(dragbottom);*/
 
 function dragmove(d) {
   console.log('dragrect:',dragrect);

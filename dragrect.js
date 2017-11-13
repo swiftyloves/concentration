@@ -11,8 +11,8 @@ let MAX_HEIGHT = 300,
 var width = w / 3 * 2,
     height = 200,
     dragbarw = 20,
-    solvent = 100;
-
+    solvent = 100,
+    solution = width * height / 100;
 
 let OFFSET_Y = height + 200;
 let OFFSET_X = 200;
@@ -48,22 +48,13 @@ var newg = svg.append("g")
 
 
 var solventContainer = newg.append("rect")
-      .attr("id", "solvent")
-      .attr("x", w / 2 )
-      .attr("y", 10)
-      .attr("height", 200)
-      .attr("width", 50)
-      .attr("fill-opacity", .5)
-      .attr("fill", 'rgb(255,0,0)')
+      .attr("x", w / 2 + 5 )
+      .attr("y", 40)
+      .attr("height", 180)
+      .attr("width", 10)
+      .attr("fill-opacity", .8)
+      .attr("fill", 'rgba(255,0,0,0.8)')
       .attr("cursor", "pointer");
-
-document.getElementById("solvent").addEventListener('click', function(){
-    solvent += 10;
-    console.log('solvent:',solvent);
-    dragrect.attr("fill", solutionColor(solvent, height * width));
-    createParticle(w/2, 210, "fall");
-});
-
 
 var dragrect = newg.append("rect")
       .attr("id", "active")
@@ -173,7 +164,9 @@ function tdragresize(d) {
       d.y = Math.max(0, Math.min(d.y + height - (dragbarw / 2), d3.event.y)); 
       height = height + (oldy - d.y);
       // console.log('height:',height);
-      if (height > MAX_HEIGHT || height < MIN_HEIGHT) { return; }
+      console.log('width * height / 100:',width * height / 100 );
+      console.log('solvent:',solvent);
+      if (height > MAX_HEIGHT || height < MIN_HEIGHT || width * height / 100 < solvent) { return; }
       dragbartop
         .attr("y", function(d) { OFFSET_Y = d.y - (dragbarw/2); console.log('OFFSET_Y:',OFFSET_Y); return d.y - (dragbarw / 2); });
 
@@ -183,6 +176,8 @@ function tdragresize(d) {
         .attr("y", function(d) { console.log('d.y:',d.y); console.log('height:',height); return d.y; })
         .attr("height", height)
         .attr("fill", solutionColor(solvent, height * width));
+    updateResult();
+    console.log('updateResult()')
 
       // dragbarleft 
       //   .attr("y", function(d) { return d.y + (dragbarw/2); })

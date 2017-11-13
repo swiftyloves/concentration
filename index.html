@@ -10,14 +10,22 @@
     #checks {
       margin: 10px;
     }
+    #solvent:hover {
+       stroke: #CCC;
+       stroke-width: 3;
+       fill: red;
+       cursor: pointer;
+       box-shadow: 10px -10px #CCC;
+
+     }
     </style>
   </head>
   <body>
-
+    <button id="reset">Reset</button>
     <div id="container"></div>
     <div class="concentration">
         <span>Concentraction = </span>
-        <span id="solvent-num"></span> / <span id="solution-num"></span>
+        <span id="solvent-num">100</span> / <span id="solution-num"></span> = <span id="result"></span> %
     </div>
 
     
@@ -26,8 +34,31 @@
     <script type="text/javascript" src="dragrect.js"></script>
     <script type="text/javascript" src="particles.js"></script>
     <script>
+        
         dragbartop 
         .attr("cursor", "ns-resize");
+
+        var updateResult = function() {
+            document.getElementById("solvent-num").textContent = solvent;
+            dragrect.attr("fill", solutionColor(solvent, height * width));
+            document.getElementById("solution-num").textContent = width * height / 100;
+            let soluton = width * height / 100;
+            document.getElementById("result").textContent =  Math.round(solvent / soluton * 10000) / 100;
+        };
+        updateResult();
+        document.getElementById("reset").addEventListener("click", function(){
+            solvent = 100;
+            updateResult();
+            particles = [];
+            resetIni();
+            for (var i = 0; i < numParticles; i++) {
+              createParticle("init");
+            }
+            var dtg = new Date();
+              epochActual = dtg.getTime();
+              doEpoch();
+            addSolventListener();
+        });
     </script>
   </body>
 </html>

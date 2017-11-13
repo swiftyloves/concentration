@@ -12,7 +12,7 @@ var pType = 'reactantA';
 var rx = 0;
 var pRadius = 0;
 // var OFFSET_Y = 300;
-let Y_LIMIT = 580;
+let Y_LIMIT = OFFSET_Y + height - 10;
 
 
 var getXSpeed = function() {
@@ -28,7 +28,7 @@ var getYSpeed = function() {
 /*
  */
 
-var createParticle = function(x, y, status) {
+var createParticle = function(status, x, y) {
     pType = "reactantA";
     pRadius = 8;
     rx = Math.floor((Math.random() * 10) + 1);
@@ -48,11 +48,56 @@ var createParticle = function(x, y, status) {
         vy: getYSpeed()
     });
 };
-var particles = [];
-for (var i = 0; i < numParticles; i++) {
-  createParticle();
-}
+// var particles = [];
 
+var solventsss = newg.append("circle")
+    .attr("id", "solvent")
+    .attr("cx", w / 2 + 10  )
+      .attr("cy", 40)
+      .attr("r", 30)
+      .attr("fill", 'rgb(255,90,30)');
+
+var particles = [];
+
+let resetIni = function() {
+    createParticle("drop", w/2 + 10, 40)
+    particles[0].r = 30;
+    particles[0].color = "rgba(255,0,0,1)"
+    particles[0].id = "solvent";
+    for (var i = 0; i < numParticles; i++) {
+        createParticle("init");
+    }
+    console.log(particles[1].status)
+};
+
+resetIni();
+
+var createSolvent = function(status, x, y) {
+    pType = "reactantA";
+    pRadius = 8;
+    rx = Math.floor((Math.random() * 10) + 1);
+    if (rx > 5) {
+        pType = "reactantB";
+        pRadius = 5;
+    }
+
+    //console.log(i, pType);
+    particles.push({
+        x: x ? x : Math.floor(w/2 - pRadius + Math.random() * width),
+        y: y ? y : Math.floor( + Math.random() * height),
+        r: pRadius,
+        status: "solvent",
+        key: counter++,
+        type: pType,
+        vx: getXSpeed(),
+        vy: getYSpeed()
+    });
+};
+
+
+for (var i = 50; i < numParticles; i++) {
+  createParticle("init");
+}
 
 // Create the initial structure of the game board (using SVG rectangles)
 // var svg = d3.select("#container").append("svg")
@@ -64,7 +109,7 @@ for (var i = 0; i < numParticles; i++) {
 var redraw = function(elapsed) {
   // Bind the data to the particles
   var particle = svg.selectAll("circle").data(particles, function(d) {
-    return d.key;
+    if (d) {return d.key};
   });
 
   // Update
@@ -77,7 +122,13 @@ var redraw = function(elapsed) {
     })
     .attr("class", function(d) {
       return d.type;
-    });
+    })
+    .attr("fill", function(d) {
+        return d.color ? d.color : "rgba(255,0,0,0.7)"}
+    )
+    .attr("id", function(d) {
+        return d.id ? d.id : ""}
+    );
 
   // Enter
 
@@ -90,7 +141,13 @@ var redraw = function(elapsed) {
     })
     .attr("r", function(d) {
       return d.r;
-    });
+    })
+    .attr("fill", function(d) {
+        return d.color ? d.color : "rgba(255,0,0,0.7)"}
+    )
+    .attr("id", function(d) {
+        return d.id ? d.id : ""}
+    );
 
   particle.exit().remove();
 };
@@ -106,19 +163,24 @@ var update = function(elapsed) {
 
 
     var particle = particles[j];
+    // console.log(particle.status)
+    // console.log('particle.status:',particle.status);
+    if (particle.status == "drop") {
+        continue;
+    }
 
     if (particle.status == 'fall' ) {
         if (particle.y < OFFSET_Y) {
             particle.vy = particle.vy + 1.2;
-            console.log('123345')
             particle.y = particle.y + (elapsed / 1000) * particle.vy;
 
             continue;
         } else {
             particle.status = 'collected';
+            updateResult();
         }
     }
-    if (particle.status == 'collected' && particle.y < Y_LIMIT) {
+    if (particle.status == 'collected' && particle.y < Y_LIMIT && particle.vy > 1.9) {
         particle.vy = particle.vy - 0.8;
     } else {
         particle.status = '';
@@ -188,4 +250,19 @@ var doEpoch = function() {
   var dtg = new Date();
   epochActual = dtg.getTime();
   doEpoch();
+
+let addSolventListener = function() {
+    console.log('addSolventListener')
+    document.getElementById("solvent").addEventListener('click', function(){
+        console.log('solution:', width * height / 100)
+        console.log('solvent:',solvent);
+        if (solvent + 10 > width * height / 100) {
+            return;
+        }
+        solvent += 10;
+        createParticle("fall", w/2 + 15, 210);
+    });
+}
+
+addSolventListener();
 // });

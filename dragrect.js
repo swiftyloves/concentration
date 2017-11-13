@@ -1,5 +1,5 @@
 var w = 1050,
-    h = 750,
+    h = 700,
     r = 120;
 
 var isXChecked = true,
@@ -37,8 +37,8 @@ var dragbottom = d3.behavior.drag()
     .origin(Object)
     .on("drag", bdragresize);
 
-var svg = d3.select("body").append("svg")
-    .attr("width", w)
+var svg = d3.select("#container").append("svg")
+    .attr("width", '100%')
     .attr("height", h)
 
 var newg = svg.append("g")

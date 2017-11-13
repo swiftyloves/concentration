@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' media="all" rel="stylesheet" type="text/css" />
     <style type="text/css">
     svg {
       border: solid 1px #aaa;
@@ -16,17 +17,114 @@
        fill: red;
        cursor: pointer;
        box-shadow: 10px -10px #CCC;
-
+     }
+     #container {
+        margin-bottom: -50px;
+     }
+     #reset {
+        position: absolute;
+        right: 50px;
+     }
+     .concentration {
+        font-size: 2em;
+     }
+     .center {
+        text-align: center;
+     }
+     .mb-5 {
+        margin-bottom: 50px;
+     }
+     .mb-3 {
+        margin-bottom: 30px;
+     }
+     .overall {
+        display: -webkit-flex; /* Safari */
+        -webkit-align-items: center; /* Safari 7.0+ */
+        display: flex;
+        align-items: center;
+     }
+     .flex-in {
+        flex: 1;
+     }
+     .solution-num-container {
+        border-top: 1px solid gray;
+     }
+     #reset {
+        font-size: 20px;
+        border-radius: 3px;
+     }
+     .content {
+        font-size: 18px;
+        line-height: 30px;
+        color: #8a8a8a;
+        font-family: 'Open Sans';
      }
     </style>
   </head>
   <body>
-    <button id="reset">Reset</button>
-    <div id="container"></div>
-    <div class="concentration">
-        <span>Concentraction = </span>
-        <span id="solvent-num">100</span> / <span id="solution-num"></span> = <span id="result"></span> %
+    <div class="container-fluid min-h100per">
+        <div class="row mb-5">
+            <div class="col-md-offset-1 col-md-10">
+                <h2 class="center">Concentration</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <h3 class="">Introduction</h3>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-offset-1 col-md-10 content">
+                In chemistry, concentration is the abundance of a constituent divided by the total volume of a mixture. Several types of mathematical description can be distinguished: mass concentration, molar concentration, number concentration, and volume concentration.[1] The term concentration can be applied to any kind of chemical mixture, but most frequently it refers to solutes and solvents in solutions. The molar (amount) concentration has variants such as normal concentration and osmotic concentration.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <h3 class="">Formula</h3>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-offset-1 col-md-10 content">
+                The denomial is the 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <h3 class="">Experienment</h3>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-offset-1 col-md-10 content">
+                Changing the horizontal line of the solution caused in the change of volume. Cliking the dropper would increase the volume of solvent. The color is darker when the concentration is higher.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-7 concentration">
+                <div class="row overall">
+                    <div class="col-md-offset-1 col-md-3 flex-in">
+                        <span>Concentration = </span>
+                    </div>
+                    <div class="col-md-2 flex-in center">
+                        <div><span id="solvent-num">100</span> ml </div>
+                        <div class="solution-num-container"><span id="solution-num"></span> ml</div>
+                    </div>
+                    <div class="col-md-1 flex-in">
+                        = <span id="result"></span> %
+                    </div>
+                </div>
+                <div class=" center mb-5">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div id="container"></div>
+                <button id="reset" class="btn-primary btn-default">Reset</button>
+            </div>
+        </div>
     </div>
+    
 
     
     <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>

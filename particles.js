@@ -180,7 +180,7 @@ var update = function(elapsed) {
             updateResult();
         }
     }
-    if (particle.status == 'collected' && particle.y < Y_LIMIT && particle.vy > 1.9) {
+    if (particle.status == 'collected' && particle.y < Y_LIMIT && particle.vy > 12.7) {
         particle.vy = particle.vy - 0.8;
     } else {
         particle.status = '';

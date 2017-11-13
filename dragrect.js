@@ -5,7 +5,7 @@ var w = 1050,
 var isXChecked = true,
     isYChecked = true;
 
-let MAX_HEIGHT = 300,
+let MAX_HEIGHT = 360,
     MIN_HEIGHT = 20;
 
 var width = w / 3 * 2,
@@ -71,7 +71,7 @@ var dragbartop = newg.append("rect")
       .attr("height", dragbarw)
       .attr("id", "dragleft")
       .attr("width", w / 3 * 2 - dragbarw)
-      .attr("fill", "lightgreen")
+      .attr("fill", "Orange")
       .attr("fill-opacity", .5)
       .attr("cursor", "ns-resize")
       .call(dragtop);

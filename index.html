@@ -46,7 +46,10 @@
      .flex-in {
         flex: 1;
      }
-     .solution-num-container {
+     .flex-in-2 {
+        flex: 2;
+     }
+     .border-top {
         border-top: 1px solid gray;
      }
      #reset {
@@ -58,6 +61,12 @@
         line-height: 30px;
         color: #8a8a8a;
         font-family: 'Open Sans';
+     }
+     .annotation {
+        font-size: 15px;
+        line-height: 20px;
+        color: #8a8a8a;
+        font-family: 'serif';
      }
     </style>
   </head>
@@ -75,7 +84,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-md-offset-1 col-md-10 content">
-                In chemistry, concentration is the abundance of a constituent divided by the total volume of a mixture. Several types of mathematical description can be distinguished: mass concentration, molar concentration, number concentration, and volume concentration.[1] The term concentration can be applied to any kind of chemical mixture, but most frequently it refers to solutes and solvents in solutions. The molar (amount) concentration has variants such as normal concentration and osmotic concentration.
+                In chemistry, concentration is the abundance of a constituent divided by the total volume of a mixture. Several types of mathematical description can be distinguished: <strong>mass concentration</strong>, molar concentration, number concentration, and volume concentration.[1] The term concentration can be applied to any kind of chemical mixture, but most frequently it refers to solutes and solvents in solutions. The molar (amount) concentration has variants such as normal concentration and osmotic concentration.
             </div>
         </div>
         <div class="row">
@@ -84,8 +93,43 @@
             </div>
         </div>
         <div class="row mb-3">
+            <div class="col-md-offset-2 col-md-8 content">
+                <div class="row overall">
+                    <div class="col-md-offset-0 col-md-2 flex-in">
+                        <span>Mass Concentration</span>
+                    </div>
+                    <div class="col-md-1">
+                        =
+                    </div>
+                    <div class="col-md-5 flex-in-2 center">
+                        <div><span>Mass of Solvent</span></div>
+                        <div class="border-top"><span>Mass of Solvent + Mass of Solute</span></div>
+                    </div>
+                    <div class="col-md-1">
+                        =
+                    </div>
+                    <div class="col-md-2 flex-in center">
+                        <div><span>Mass of Solvent</span></div>
+                        <div class="border-top"><span>Mass of Solution</span></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-offset-1 col-md-10 annotation">
+                The numerator is the mass of solvent and the denominator is the mass of the solution.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <h3 class="">Try</h3>
+            </div>
+        </div>
+        <div class="row mb-5">
             <div class="col-md-offset-1 col-md-10 content">
-                The denomial is the 
+                Change the solution and solvent to see how concentration changes.
             </div>
         </div>
 
@@ -96,25 +140,46 @@
         </div>
         <div class="row mb-3">
             <div class="col-md-offset-1 col-md-10 content">
-                Changing the horizontal line of the solution caused in the change of volume. Cliking the dropper would increase the volume of solvent. The color is darker when the concentration is higher.
+                <p>Changing the horizontal line of the solution causes the change of mass of solution, which also changes the denominator of concentration. Cliking the dropper would produce solvent and flow into the solution, which increases the mass of solvent.</p>
+                <p>
+                    The solvent is red. the color of the solution is darker (and more red) when we add more sovent, which means the concentration is higher.
+                </p>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-2 col-md-7 concentration">
+            <div class="col-md-offset-1 col-md-10">
                 <div class="row overall">
-                    <div class="col-md-offset-1 col-md-3 flex-in">
-                        <span>Concentration = </span>
+                    <div class="col-md-2 flex-in-1 content">
+                        <span>Concentration</span>
                     </div>
-                    <div class="col-md-2 flex-in center">
-                        <div><span id="solvent-num">100</span> ml </div>
-                        <div class="solution-num-container"><span id="solution-num"></span> ml</div>
+                    <div class="col-md-1 flex-in-1">
+                        =
                     </div>
-                    <div class="col-md-1 flex-in">
-                        = <span id="result"></span> %
+                    <div class="col-md-2 flex-in-1 center content">
+                        <div><span>Mass of Solvent</span></div>
+                        <div class="border-top"><span>Mass of Solution</span></div>
+                    </div>
+                    <div class="col-md-1 flex-in-1">
+                        =
+                    </div>
+                    <div class="col-md-2 flex-in-2 center concentration">
+                        <div><span id="solvent-num">100</span> g </div>
+                        <div class="border-top"><span id="solution-num"></span> g</div>
+                    </div>
+                    <div class="col-md-1 flex-in-1 concentration">
+                        =
+                    </div>
+                    <div class="col-md-1 flex-in concentration">
+                        <span id="result"></span> %
                     </div>
                 </div>
                 <div class=" center mb-5">
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 annotation">
+                Click on the red dropper and move the orange bar.
             </div>
         </div>
         <div class="row">

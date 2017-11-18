@@ -33,6 +33,7 @@ var dragtop = d3.behavior.drag()
     .origin(Object)
     .on("drag", tdragresize);
 
+
 var dragbottom = d3.behavior.drag()
     .origin(Object)
     .on("drag", bdragresize);
@@ -46,6 +47,45 @@ var newg = svg.append("g")
       .data([{x: OFFSET_X, y: OFFSET_Y, height: height}])
       .enter();
 
+var solventContainer = newg.append("rect")
+      .attr("x", OFFSET_X)
+      .attr("y", OFFSET_Y - height + 45)
+      .attr("height", MAX_HEIGHT - 5)
+      .attr("width", width)
+      .attr("fill-opacity", .2)
+      .attr("fill", 'rgba(255,0,0,0.2)');
+      // .attr("stroke", "red");
+
+newg.append("rect")
+    .attr("x", OFFSET_X)
+    .attr("y", OFFSET_Y - height + 45)
+    .attr("height", MAX_HEIGHT -5)
+    .attr("width", 5)
+    .attr("fill", 'rgba(255,0,0, 0.8)');
+
+newg.append("rect")
+    .attr("x", OFFSET_X + width)
+    .attr("y", OFFSET_Y - height + 45)
+    .attr("height", MAX_HEIGHT -5)
+    .attr("width", 5)
+    .attr("fill", 'rgba(255,0,0, 0.8)');
+
+newg.append("rect")
+    .attr("x", OFFSET_X)
+    .attr("y", OFFSET_Y + height)
+    .attr("height", 5)
+    .attr("width", width + 5)
+    .attr("fill", 'rgba(255,0,0, 0.8)');
+
+
+// svg.append("rect")
+//     .attr("filter", "url(#clippy)")
+//     .attr("class", "extent") 
+//     .attr("style", "cursor:move; opacity:0.2; fill: #FF9000")
+//     .attr("x", "578")
+//     .attr("height", "250")
+//     .attr("width" "356")
+
 
 var solventContainer = newg.append("rect")
       .attr("x", w / 2 + 5 )
@@ -55,6 +95,31 @@ var solventContainer = newg.append("rect")
       .attr("fill-opacity", .8)
       .attr("fill", 'rgba(255,0,0,0.8)')
       .attr("cursor", "pointer");
+
+var hint = d3.select("#container").append("div")
+       // .style("display","none")
+       .style('position',"absolute")
+       .style("fill","black");
+
+
+hint.text( "<--- Click the red dropper to add solvent")
+        .attr("id", "hint-1")
+       .style("left", (w / 2 + 80) + "px")
+       .style("top", "30px")
+       .style("color","red");
+
+var hint2 = d3.select("#container").append("div")
+       // .style("display","none")
+       .style('position',"absolute")
+       .style("fill","black");
+
+
+hint2.text( "<--- Drag the bar to change the volume of solution.")
+        .attr("id", "hint-2")
+       .style("left", (w - 120) + "px")
+       .style("top", OFFSET_Y - 10+ "px")
+       .style("width", "200px")
+       .style("color","blue");
 
 var dragrect = newg.append("rect")
       .attr("id", "active")
@@ -76,8 +141,39 @@ var dragbartop = newg.append("rect")
       .attr("cursor", "ns-resize")
       .call(dragtop);
 
+var chernoffTips = d3.select("#container").append("div")
+       // .style("display","none")
+       .style('position',"absolute")
+       .style("fill","black");
+
+
+dragbartop
+    .on("mouseover", handleMouseOver)
+    .on("mouseout",handleMouseOut)
+    .on("mousemove", handleMouseMove);
+
+
+function handleMouseOver(d,i){
+   chernoffTips.style("display","inline");
+}
+
+function handleMouseMove(d,i){
+   var fieldName=d3.select(this).attr('class');
+   
+   chernoffTips.text( width * height / 100 + " g")
+       .style("left", (OFFSET_X - 30) + "px")
+       .style("top", OFFSET_Y + "px")
+       .style("color","black");
+}
+function handleMouseOut(d,i){
+    if (document.getElementById('hint-2')) {
+        document.getElementById('hint-2').remove();
+    }
+}
+
+
+
 function dragmove(d) {
-  console.log('dragrect:',dragrect);
     dragrect
         .attr("y", d.y = Math.max(0, Math.min(h - height, d3.event.y)))
         .attr("fill", 'rgba(0, 156, 235, 0.6)');
@@ -164,28 +260,16 @@ function tdragresize(d) {
       d.y = Math.max(0, Math.min(d.y + height - (dragbarw / 2), d3.event.y)); 
       height = height + (oldy - d.y);
       // console.log('height:',height);
-      console.log('width * height / 100:',width * height / 100 );
-      console.log('solvent:',solvent);
       if (height > MAX_HEIGHT || height < MIN_HEIGHT || width * height / 100 < solvent) { return; }
       dragbartop
-        .attr("y", function(d) { OFFSET_Y = d.y - (dragbarw/2); console.log('OFFSET_Y:',OFFSET_Y); return d.y - (dragbarw / 2); });
+        .attr("y", function(d) { OFFSET_Y = d.y - (dragbarw/2); return d.y - (dragbarw / 2); });
 
-      // console.log(solutionColor(solvent, height * width))
-      
       dragrect
-        .attr("y", function(d) { console.log('d.y:',d.y); console.log('height:',height); return d.y; })
+        .attr("y", function(d) { return d.y; })
         .attr("height", height)
         .attr("fill", solutionColor(solvent, height * width));
     updateResult();
-    console.log('updateResult()')
-
-      // dragbarleft 
-      //   .attr("y", function(d) { return d.y + (dragbarw/2); })
-      //   .attr("height", height - dragbarw);
-      // dragbarright 
-      //   .attr("y", function(d) { return d.y + (dragbarw/2); })
-      //   .attr("height", height - dragbarw);
-  // }
+    // console.log('updateResult()')
 }
 
 function bdragresize(d) {

@@ -67,7 +67,6 @@ let resetIni = function() {
     for (var i = 0; i < numParticles; i++) {
         createParticle("init");
     }
-    console.log(particles[1].status)
 };
 
 resetIni();
@@ -155,9 +154,6 @@ var redraw = function(elapsed) {
 /*
  */
 var update = function(elapsed) {
-  // console.log('OFFSET_Y:',OFFSET_Y);
-  // console.log('height:',height);
-  // console.log('OFFSET_Y + height:',OFFSET_Y + height);
   for (var j = 0; j < particles.length; j++) {
 
 
@@ -252,10 +248,10 @@ var doEpoch = function() {
   doEpoch();
 
 let addSolventListener = function() {
-    console.log('addSolventListener')
     document.getElementById("solvent").addEventListener('click', function(){
-        console.log('solution:', width * height / 100)
-        console.log('solvent:',solvent);
+        if (document.getElementById('hint-1')) {
+            document.getElementById('hint-1').remove();
+        }
         if (solvent + 10 > width * height / 100) {
             return;
         }

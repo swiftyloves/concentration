@@ -68,6 +68,9 @@
         color: #8a8a8a;
         font-family: 'serif';
      }
+     .orange {
+        color: orange;
+     }
     </style>
   </head>
   <body>
@@ -163,7 +166,7 @@
                         =
                     </div>
                     <div class="col-md-2 flex-in-2 center concentration">
-                        <div><span id="solvent-num">100</span> g </div>
+                        <div><span id="solvent-num" class="abc">100</span> g </div>
                         <div class="border-top"><span id="solution-num"></span> g</div>
                     </div>
                     <div class="col-md-1 flex-in-1 concentration">
@@ -202,11 +205,28 @@
         .attr("cursor", "ns-resize");
 
         var updateResult = function() {
+            document.getElementById("solvent-num").className = "";
+            document.getElementById("solution-num").className = "";
+            document.getElementById("result").className = "";
+
+            let original_solvent = document.getElementById("solvent-num").textContent;
+            
+            if (parseInt(original_solvent) !== solvent) {
+                document.getElementById("solvent-num").className = "orange";
+            }
             document.getElementById("solvent-num").textContent = solvent;
-            dragrect.attr("fill", solutionColor(solvent, height * width));
+
+            let original_solution = document.getElementById("solution-num").textContent;
             document.getElementById("solution-num").textContent = width * height / 100;
+            if (parseFloat(original_solution) !== width * height / 100) {
+                document.getElementById("solution-num").className = "orange";
+            }
+            
+            dragrect.attr("fill", solutionColor(solvent, height * width));
+            
             let soluton = width * height / 100;
             document.getElementById("result").textContent =  Math.round(solvent / soluton * 10000) / 100;
+            document.getElementById("result").className = "orange";
         };
         updateResult();
         document.getElementById("reset").addEventListener("click", function(){
